@@ -29,7 +29,6 @@
             position: relative;
         }
 
-        /* Side Menu */
         .side-menu {
             width: 280px;
             background: white;
@@ -74,7 +73,6 @@
             color: white;
         }
 
-        /* Main Content Area */
         .main-content {
             flex-grow: 1;
             margin-left: 300px;
@@ -92,7 +90,6 @@
             overflow-y: auto;
         }
 
-        /* Navigation Bar */
         .navigation {
             padding: 15px 30px;
             border-top: 1px solid #eee;
@@ -170,7 +167,7 @@
             
             <div class="navigation">
                 <button class="nav-btn" id="prevBtn" onclick="prevSlide()">Previous</button>
-                <div class="slide-counter" id="slideCounter">Slide 1/28</div>
+                <div class="slide-counter" id="slideCounter">Slide 1/2</div>
                 <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next</button>
             </div>
         </div>
@@ -179,37 +176,11 @@
     <script>
         const slideTitles = [
             "2.1 Units",
-            "2.2 Mains Electricity",
-            "2.3 Current in Resistors",
-            "2.4 Power Relationship",
-            "2.5 Energy Transfer",
-            "2.6 AC vs DC",
-            "2.7 Series vs Parallel",
-            "2.8 Current in Series",
-            "2.9 Current vs Voltage",
-            "2.10 Resistance Effects",
-            "2.11 LDR and Thermistors",
-            "2.12 Circuit Indicators",
-            "2.13 Ohm's Law",
-            "2.14 Current Flow",
-            "2.15 Charge and Current",
-            "2.16 Electron Flow",
-            "2.17 Current at Junction",
-            "2.18 Parallel Voltage",
-            "2.19 Series Calculations",
-            "2.20 Volt Definition",
-            "2.21 Energy and Charge",
-            "2.22P Conductors",
-            "2.23P Friction Charging",
-            "2.24P Electrostatic Charges",
-            "2.25P Charge Forces",
-            "2.26P Electron Movement",
-            "2.27P Static Dangers",
-            "2.28P Static Uses"
+            "2.2 Mains Electricity"
         ];
 
         let currentSlide = 1;
-        const totalSlides = 28;
+        const totalSlides = 2; // Updated to match your current slides
 
         // Create slide menu buttons
         function createSlideMenu() {
@@ -232,7 +203,7 @@
                 loading.style.display = 'block';
                 slideContent.innerHTML = ''; // Clear current content
                 
-                // Using the repository name in the path for GitHub Pages
+                // Using relative path to slides directory
                 const response = await fetch(`./slides/slide${slideNumber}.html`);
                 
                 if (!response.ok) {
