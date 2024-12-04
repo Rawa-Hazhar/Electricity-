@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <style>
-    .slide-header {
+    .slide-content {
+        padding: 20px;
+    }
+
+    .header {
         background: linear-gradient(90deg, #d32f2f, #f44336);
         color: white;
         padding: 2rem;
@@ -10,26 +14,32 @@
         margin-bottom: 2rem;
     }
 
+    .header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
     .safety-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
         margin: 2rem 0;
     }
 
     .safety-card {
         background: white;
         border-radius: 15px;
-        padding: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        position: relative;
+        padding: 1.5rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
         border: 1px solid #e0e0e0;
+        position: relative;
+        overflow: hidden;
     }
 
     .safety-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     }
 
     .safety-icon {
@@ -46,34 +56,34 @@
         font-weight: bold;
     }
 
-    .device-demo {
-        background: #fff;
+    .demo-section {
+        background: white;
         border-radius: 15px;
         padding: 2rem;
         margin: 2rem 0;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .demo-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
+    .wire-diagram {
+        width: 100%;
+        max-width: 500px;
+        height: 200px;
+        margin: 2rem auto;
+        display: block;
+    }
+
+    .circuit-demo {
+        text-align: center;
         margin: 2rem 0;
     }
 
-    .circuit-breaker {
-        position: relative;
-        width: 120px;
-        height: 60px;
-        margin: 2rem auto;
-    }
-
     .switch {
-        position: absolute;
         width: 120px;
         height: 60px;
         background: #e0e0e0;
         border-radius: 30px;
+        display: inline-block;
+        position: relative;
         cursor: pointer;
         transition: 0.3s;
     }
@@ -83,10 +93,10 @@
         position: absolute;
         width: 52px;
         height: 52px;
+        background: white;
         border-radius: 50%;
         top: 4px;
         left: 4px;
-        background: white;
         transition: 0.3s;
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
@@ -99,38 +109,36 @@
         transform: translateX(60px);
     }
 
-    .wire-demo {
-        text-align: center;
-        padding: 2rem;
-        background: #f5f5f5;
-        border-radius: 15px;
-    }
-
-    .status-text {
-        text-align: center;
+    .status {
         margin-top: 1rem;
         font-weight: bold;
+        font-size: 1.1rem;
     }
 
     .quiz-section {
-        background: #fff;
+        background: #f8f9fa;
         border-radius: 15px;
         padding: 2rem;
         margin: 2rem 0;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .quiz-options {
+        margin: 1.5rem 0;
     }
 
     .quiz-option {
-        background: #f8f9fa;
+        background: white;
         padding: 1rem;
-        border-radius: 10px;
+        border-radius: 8px;
         margin: 0.5rem 0;
         cursor: pointer;
         transition: background 0.3s ease;
+        border: 1px solid #e0e0e0;
     }
 
     .quiz-option:hover {
-        background: #ffe0e0;
+        background: #fff3f3;
     }
 
     .check-btn {
@@ -138,7 +146,7 @@
         color: white;
         border: none;
         padding: 1rem 2rem;
-        border-radius: 10px;
+        border-radius: 8px;
         cursor: pointer;
         font-size: 1rem;
         transition: background 0.3s ease;
@@ -152,7 +160,7 @@
 
     .feedback {
         padding: 1rem;
-        border-radius: 10px;
+        border-radius: 8px;
         margin-top: 1rem;
         display: none;
     }
@@ -171,105 +179,119 @@
         display: block;
     }
 
-    .safety-points {
-        margin-top: 1rem;
-        padding-left: 1.5rem;
+    .points-list {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
     }
 
-    .safety-points li {
+    .points-list li {
         margin: 0.5rem 0;
-        color: #424242;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .points-list li::before {
+        content: '•';
+        color: #f44336;
+        position: absolute;
+        left: 0;
+        font-weight: bold;
     }
 
     .danger-level {
-        display: inline-block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
         padding: 0.3rem 0.8rem;
         border-radius: 15px;
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
+        font-size: 0.8rem;
         background: #ffe0e0;
         color: #c62828;
     }
 </style>
 
 <div class="slide-content">
-    <div class="slide-header">
+    <div class="header">
         <h1>2.2 Electrical Safety in Domestic Appliances</h1>
         <p>Understanding essential protection methods in electrical devices</p>
     </div>
 
+    <div class="demo-section">
+        <h2>Double Insulation Demonstration</h2>
+        <svg class="wire-diagram" viewBox="0 0 500 200">
+            <!-- Outer insulation -->
+            <rect x="50" y="60" width="400" height="80" fill="#f44336" rx="40" ry="40"/>
+            <!-- Inner insulation -->
+            <rect x="75" y="75" width="350" height="50" fill="#ffcdd2" rx="25" ry="25"/>
+            <!-- Copper wire -->
+            <rect x="100" y="90" width="300" height="20" fill="#d32f2f" rx="10" ry="10"/>
+            <!-- Labels -->
+            <text x="250" y="40" text-anchor="middle" fill="#666" font-size="16">Double Insulation Protection</text>
+            <text x="250" y="180" text-anchor="middle" fill="#666" font-size="14">Outer Protective Layer</text>
+            <text x="250" y="102" text-anchor="middle" fill="white" font-size="12">Copper Wire</text>
+        </svg>
+    </div>
+
     <div class="safety-grid">
         <div class="safety-card">
+            <span class="danger-level">Primary Protection</span>
             <div class="safety-icon">I</div>
             <h3>Insulation</h3>
             <p>Non-conducting material covering electrical components</p>
-            <ul class="safety-points">
+            <ul class="points-list">
                 <li>Prevents direct contact with live parts</li>
-                <li>Made from rubber or plastic materials</li>
+                <li>Usually made of plastic or rubber</li>
                 <li>Must be regularly checked for damage</li>
+                <li>First line of defense against electric shock</li>
             </ul>
-            <span class="danger-level">Critical Safety Feature</span>
         </div>
 
         <div class="safety-card">
+            <span class="danger-level">Enhanced Safety</span>
             <div class="safety-icon">D</div>
             <h3>Double Insulation</h3>
             <p>Two layers of insulating material for extra protection</p>
-            <ul class="safety-points">
-                <li>No need for earth wire</li>
+            <ul class="points-list">
+                <li>Eliminates need for earth wire</li>
                 <li>Common in portable appliances</li>
                 <li>Marked with square-within-square symbol</li>
+                <li>Provides backup protection</li>
             </ul>
-            <span class="danger-level">Enhanced Protection</span>
         </div>
 
         <div class="safety-card">
+            <span class="danger-level">Critical Safety</span>
             <div class="safety-icon">E</div>
             <h3>Earthing</h3>
             <p>Safety connection to ground</p>
-            <ul class="safety-points">
-                <li>Diverts dangerous currents safely</li>
+            <ul class="points-list">
+                <li>Diverts dangerous currents away</li>
                 <li>Green/Yellow wire in plugs</li>
-                <li>Connected to metal casings</li>
+                <li>Connected to metal cases</li>
+                <li>Prevents shock hazards</li>
             </ul>
-            <span class="danger-level">Essential Safety</span>
         </div>
 
         <div class="safety-card">
-            <div class="safety-icon">F</div>
-            <h3>Fuses</h3>
-            <p>Sacrificial safety device</p>
-            <ul class="safety-points">
-                <li>Melts when current exceeds rating</li>
-                <li>Must be replaced after blowing</li>
-                <li>Different ratings for different appliances</li>
-            </ul>
             <span class="danger-level">Current Protection</span>
+            <div class="safety-icon">F</div>
+            <h3>Fuses & Circuit Breakers</h3>
+            <p>Overcurrent protection devices</p>
+            <ul class="points-list">
+                <li>Breaks circuit during faults</li>
+                <li>Different ratings for different appliances</li>
+                <li>Must be correctly rated</li>
+                <li>Prevents fire hazards</li>
+            </ul>
         </div>
     </div>
 
-    <div class="device-demo">
-        <h2>Interactive Safety Demonstrations</h2>
-        
-        <div class="demo-container">
-            <div class="wire-demo">
-                <h3>Double Insulation Diagram</h3>
-                <svg viewBox="0 0 400 100" width="100%" style="max-width: 400px;">
-                    <rect x="50" y="25" width="300" height="50" fill="#f44336" rx="25" ry="25"/>
-                    <rect x="70" y="35" width="260" height="30" fill="#ffcdd2" rx="15" ry="15"/>
-                    <rect x="90" y="45" width="220" height="10" fill="#b71c1c" rx="5" ry="5"/>
-                    <text x="200" y="95" text-anchor="middle" fill="#666" font-size="12">Outer Insulation</text>
-                    <text x="200" y="15" text-anchor="middle" fill="#666" font-size="12">Inner Insulation</text>
-                </svg>
-            </div>
-
-            <div class="wire-demo">
-                <h3>Circuit Breaker Demo</h3>
-                <div class="circuit-breaker">
-                    <div class="switch" onclick="toggleBreaker(this)"></div>
-                </div>
-                <div class="status-text" id="breakerStatus">Circuit Breaker: OFF</div>
-            </div>
+    <div class="demo-section">
+        <h2>Circuit Breaker Simulation</h2>
+        <div class="circuit-demo">
+            <div class="switch" onclick="toggleBreaker(this)"></div>
+            <div class="status" id="breakerStatus">Circuit Breaker: OFF (Circuit Protected)</div>
         </div>
     </div>
 
@@ -300,10 +322,10 @@
         element.classList.toggle('on');
         const status = document.getElementById('breakerStatus');
         if (element.classList.contains('on')) {
-            status.textContent = 'Circuit Breaker: ON (Circuit Complete)';
+            status.textContent = 'Circuit Breaker: ON (Circuit Active)';
             status.style.color = '#4caf50';
         } else {
-            status.textContent = 'Circuit Breaker: OFF (Circuit Broken)';
+            status.textContent = 'Circuit Breaker: OFF (Circuit Protected)';
             status.style.color = '#f44336';
         }
     }
@@ -330,7 +352,7 @@
             feedback.textContent = "Excellent! You understand all the key safety features and their purposes.";
             feedback.className = "feedback success";
         } else {
-            feedback.textContent = "Review the safety features and try again. Remember to think about how each safety feature works.";
+            feedback.textContent = "Review the safety features and try again. Remember each safety feature's specific role.";
             feedback.className = "feedback error";
         }
     }
