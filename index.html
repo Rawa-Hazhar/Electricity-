@@ -178,19 +178,36 @@
 
         // Function to load slide content
         async function loadSlide(slideNumber) {
-            const slidesContainer = document.querySelector('.slides');
-            const loadingIndicator = document.querySelector('.loading-indicator');
-            
-            // Update navigation state
-            currentSlide = slideNumber;
-            updateNavigation();
-            
-            // Show loading indicator
-            loadingIndicator.classList.add('active');
-            
-            try {
-                // Load the slide content from separate file
-                const response = await fetch(`slides/slide${slideNumber}.html`);
+    try {
+        const response = await fetch(`./slides/slide${slideNumber}.html`);
+        if (!response.ok) throw new Error('Slide not found');
+        
+        const slideContent = await response.text();
+        const slidesContainer = document.querySelector('.slides');
+        
+        // Clear existing content except loading indicator
+        const loadingIndicator = document.querySelector('.loading-indicator');
+        slidesContainer.innerHTML = slideContent;
+        
+        // Update navigation state
+        document.getElementById('slideCounter').textContent = `Slide ${slideNumber}/${totalSlides}`;
+        document.getElementById('prevBtn').disabled = slideNumber === 1;
+        document.getElementById('nextBtn').disabled = slideNumber === totalSlides;
+        
+        // Update slide list highlighting
+        document.querySelectorAll('#slide-list button').forEach((btn, index) => {
+            btn.classList.toggle('active', index + 1 === slideNumber);
+        });
+        
+    } catch (error) {
+        console.error('Error loading slide:', error);
+        const slidesContainer = document.querySelector('.slides');
+        slidesContainer.innerHTML = `<div class="active">
+            <h2>Error Loading Slide ${slideNumber}</h2>
+            <p>Please make sure the slide file exists and try again.</p>
+        </div>`;
+    }
+}
                 if (!response.ok) throw new Error('Slide not found');
                 
                 const slideContent = await response.text();
