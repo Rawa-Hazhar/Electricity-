@@ -115,47 +115,35 @@
         font-size: 1.1rem;
     }
 
-    .quiz-section {
-        background: #f8f9fa;
+    .danger-level {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 0.8rem;
         border-radius: 15px;
-        padding: 2rem;
-        margin: 2rem 0;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        font-size: 0.8rem;
+        background: #ffe0e0;
+        color: #c62828;
     }
 
-    .quiz-options {
-        margin: 1.5rem 0;
+    .points-list {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
     }
 
-    .quiz-option {
-        background: white;
-        padding: 1rem;
-        border-radius: 8px;
+    .points-list li {
         margin: 0.5rem 0;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        border: 1px solid #e0e0e0;
+        padding-left: 1.5rem;
+        position: relative;
     }
 
-    .quiz-option:hover {
-        background: #fff3f3;
-    }
-
-    .check-btn {
-        background: #f44336;
-        color: white;
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background 0.3s ease;
-        width: 100%;
-        margin-top: 1rem;
-    }
-
-    .check-btn:hover {
-        background: #d32f2f;
+    .points-list li::before {
+        content: '•';
+        color: #f44336;
+        position: absolute;
+        left: 0;
+        font-weight: bold;
     }
 
     .feedback {
@@ -179,35 +167,48 @@
         display: block;
     }
 
-    .points-list {
-        list-style: none;
-        padding: 0;
-        margin: 1rem 0;
-    }
-
-    .points-list li {
-        margin: 0.5rem 0;
-        padding-left: 1.5rem;
-        position: relative;
-    }
-
-    .points-list li::before {
-        content: '•';
-        color: #f44336;
-        position: absolute;
-        left: 0;
-        font-weight: bold;
-    }
-
-    .danger-level {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        padding: 0.3rem 0.8rem;
+    .quiz-section {
+        background: #f8f9fa;
         border-radius: 15px;
-        font-size: 0.8rem;
-        background: #ffe0e0;
-        color: #c62828;
+        padding: 2rem;
+        margin: 2rem 0;
+    }
+
+    .quiz-options {
+        margin: 1.5rem 0;
+    }
+
+    .quiz-option {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 0.5rem 0;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        border: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+    }
+
+    .quiz-option:hover {
+        background: #fff3f3;
+    }
+
+    .check-btn {
+        background: #f44336;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .check-btn:hover {
+        background: #d32f2f;
     }
 </style>
 
@@ -290,7 +291,7 @@
     <div class="demo-section">
         <h2>Circuit Breaker Simulation</h2>
         <div class="circuit-demo">
-            <div class="switch" onclick="toggleBreaker(this)"></div>
+            <div class="switch" onclick="toggleCircuitBreaker(this)"></div>
             <div class="status" id="breakerStatus">Circuit Breaker: OFF (Circuit Protected)</div>
         </div>
     </div>
@@ -300,43 +301,39 @@
         <p>Select all correct statements about electrical safety:</p>
         <div class="quiz-options">
             <label class="quiz-option">
-                <input type="checkbox" value="true1"> Double insulation provides two layers of protection
+                <input type="checkbox" name="safetyQuiz" value="true1"> Double insulation provides two layers of protection
             </label>
             <label class="quiz-option">
-                <input type="checkbox" value="true2"> Fuses are designed to melt when current is too high
+                <input type="checkbox" name="safetyQuiz" value="true2"> Fuses are designed to melt when current is too high
             </label>
             <label class="quiz-option">
-                <input type="checkbox" value="false1"> Earth wires carry the main current in a circuit
+                <input type="checkbox" name="safetyQuiz" value="false1"> Earth wires carry the main current in a circuit
             </label>
             <label class="quiz-option">
-                <input type="checkbox" value="false2"> Circuit breakers must be replaced after tripping
+                <input type="checkbox" name="safetyQuiz" value="false2"> Circuit breakers must be replaced after tripping
             </label>
         </div>
         <button class="check-btn" onclick="checkSafetyQuiz()">Check Understanding</button>
-        <div id="safety-feedback" class="feedback"></div>
+        <div id="quiz-feedback" class="feedback"></div>
     </div>
 </div>
 
 <script>
-    function toggleBreaker(element) {
-    if (element) {
+    function toggleCircuitBreaker(element) {
         element.classList.toggle('on');
         const status = document.getElementById('breakerStatus');
-        if (status) {
-            if (element.classList.contains('on')) {
-                status.textContent = 'Circuit Breaker: ON (Circuit Active)';
-                status.style.color = '#4caf50';
-            } else {
-                status.textContent = 'Circuit Breaker: OFF (Circuit Protected)';
-                status.style.color = '#f44336';
-            }
+        if (element.classList.contains('on')) {
+            status.textContent = 'Circuit Breaker: ON (Circuit Active)';
+            status.style.color = '#4caf50';
+        } else {
+            status.textContent = 'Circuit Breaker: OFF (Circuit Protected)';
+            status.style.color = '#f44336';
         }
     }
-}
 
     function checkSafetyQuiz() {
-        const checkboxes = document.querySelectorAll('.quiz-options input');
-        const feedback = document.getElementById('safety-feedback');
+        const checkboxes = document.querySelectorAll('input[name="safetyQuiz"]');
+        const feedback = document.getElementById('quiz-feedback');
         
         const correct = {
             'true1': true,
@@ -346,14 +343,27 @@
         };
 
         let allCorrect = true;
+        let checkedAny = false;
+
         checkboxes.forEach(box => {
-            if (box.checked !== correct[box.value]) {
+            if (box.checked) {
+                checkedAny = true;
+                if (correct[box.value] !== true) {
+                    allCorrect = false;
+                }
+            } else if (correct[box.value] === true) {
                 allCorrect = false;
             }
         });
 
+        if (!checkedAny) {
+            feedback.textContent = "Please select at least one answer!";
+            feedback.className = "feedback error";
+            return;
+        }
+
         if (allCorrect) {
-            feedback.textContent = "Excellent! You understand all the key safety features and their purposes.";
+            feedback.textContent = "Excellent! You understand the key safety features and their purposes.";
             feedback.className = "feedback success";
         } else {
             feedback.textContent = "Review the safety features and try again. Remember each safety feature's specific role.";
