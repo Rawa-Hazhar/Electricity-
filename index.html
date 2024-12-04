@@ -16,43 +16,97 @@
             line-height: 1.6;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
+            display: flex;
             padding: 20px;
         }
 
-        .container {
-            max-width: 1200px;
+        .page-container {
+            display: flex;
+            width: 100%;
+            max-width: 1600px;
             margin: 0 auto;
+            gap: 20px;
+        }
+
+        /* Side Menu Styles */
+        .side-menu {
+            width: 300px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            height: calc(100vh - 40px);
+            position: fixed;
+            overflow-y: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-title {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .slide-button {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .slide-button:hover {
+            background: #f0f7ff;
+        }
+
+        .slide-button.active {
+            background: #2196F3;
+            color: white;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            margin-left: 320px;
+            background: white;
+            border-radius: 15px;
+            min-height: calc(100vh - 40px);
             position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         #slide-content {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 80px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            min-height: 500px;
+            padding: 30px;
+            min-height: calc(100vh - 140px);
         }
 
+        /* Navigation Bar */
         .navigation {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
             background: white;
-            padding: 1rem;
-            border-radius: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 15px 30px;
+            border-top: 1px solid #eee;
             display: flex;
-            gap: 1rem;
-            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
         }
 
         .nav-btn {
             background: #2196F3;
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
+            padding: 12px 25px;
             border-radius: 25px;
             cursor: pointer;
             font-size: 1rem;
@@ -69,91 +123,49 @@
         }
 
         .slide-counter {
-            background: #fff;
-            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            padding: 10px 20px;
             border-radius: 25px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        #slide-menu {
-            position: fixed;
-            right: 20px;
-            top: 20px;
-            background: white;
-            padding: 1rem;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-height: 80vh;
-            overflow-y: auto;
-            z-index: 1000;
-            width: 250px;
-        }
-
-        .menu-title {
-            text-align: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #eee;
-        }
-
-        .slide-button {
-            display: block;
-            width: 100%;
-            padding: 0.8rem;
-            margin: 0.3rem 0;
-            border: none;
-            background: none;
-            text-align: left;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .slide-button:hover {
-            background: #f0f0f0;
-        }
-
-        .slide-button.active {
-            background: #2196F3;
-            color: white;
+            font-weight: 500;
+            color: #444;
         }
 
         #loading {
-            display: none;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding: 1rem;
+            padding: 20px 40px;
             background: white;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Slide Menu -->
-        <div id="slide-menu">
-            <h3 class="menu-title">Slides</h3>
+    <div class="page-container">
+        <!-- Side Menu -->
+        <div class="side-menu">
+            <h2 class="menu-title">Physics: Electricity</h2>
             <!-- Slide buttons will be added here by JavaScript -->
         </div>
 
-        <!-- Slide Content -->
-        <div id="slide-content">
-            <div id="loading">Loading...</div>
-        </div>
-
-        <!-- Navigation -->
-        <div class="navigation">
-            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">Previous</button>
-            <div class="slide-counter" id="slideCounter">Slide 1/28</div>
-            <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next</button>
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <div id="slide-content">
+                <div id="loading">Loading...</div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="prevSlide()">Previous</button>
+                <div class="slide-counter" id="slideCounter">Slide 1/28</div>
+                <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Slide titles
         const slideTitles = [
             "2.1 Units",
             "2.2 Mains Electricity",
@@ -190,7 +202,7 @@
 
         // Create slide menu buttons
         function createSlideMenu() {
-            const menu = document.getElementById('slide-menu');
+            const menu = document.querySelector('.side-menu');
             slideTitles.forEach((title, index) => {
                 const button = document.createElement('button');
                 button.className = 'slide-button';
