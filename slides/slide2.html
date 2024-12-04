@@ -319,16 +319,20 @@
 
 <script>
     function toggleBreaker(element) {
+    if (element) {
         element.classList.toggle('on');
         const status = document.getElementById('breakerStatus');
-        if (element.classList.contains('on')) {
-            status.textContent = 'Circuit Breaker: ON (Circuit Active)';
-            status.style.color = '#4caf50';
-        } else {
-            status.textContent = 'Circuit Breaker: OFF (Circuit Protected)';
-            status.style.color = '#f44336';
+        if (status) {
+            if (element.classList.contains('on')) {
+                status.textContent = 'Circuit Breaker: ON (Circuit Active)';
+                status.style.color = '#4caf50';
+            } else {
+                status.textContent = 'Circuit Breaker: OFF (Circuit Protected)';
+                status.style.color = '#f44336';
+            }
         }
     }
+}
 
     function checkSafetyQuiz() {
         const checkboxes = document.querySelectorAll('.quiz-options input');
