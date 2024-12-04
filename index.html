@@ -16,15 +16,25 @@
             line-height: 1.6;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            position: relative;
         }
 
-        .navigation-bar {
+        #slide-content {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 80px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-height: 500px;
+        }
+
+        .navigation {
             position: fixed;
             bottom: 20px;
             left: 50%;
@@ -32,7 +42,7 @@
             background: white;
             padding: 1rem;
             border-radius: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             gap: 1rem;
             z-index: 1000;
@@ -62,172 +72,159 @@
             background: #fff;
             padding: 0.8rem 1.5rem;
             border-radius: 25px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .slides > div {
-            display: none;
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .slides > div.active {
-            display: block;
-        }
-
-        #slide-list {
+        #slide-menu {
             position: fixed;
-            top: 20px;
             right: 20px;
+            top: 20px;
             background: white;
             padding: 1rem;
             border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             max-height: 80vh;
             overflow-y: auto;
             z-index: 1000;
+            width: 250px;
         }
 
-        #slide-list button {
+        .menu-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .slide-button {
             display: block;
             width: 100%;
-            text-align: left;
-            padding: 0.5rem;
-            margin: 0.2rem 0;
+            padding: 0.8rem;
+            margin: 0.3rem 0;
             border: none;
             background: none;
+            text-align: left;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
 
-        #slide-list button:hover {
+        .slide-button:hover {
             background: #f0f0f0;
         }
 
-        #slide-list button.active {
+        .slide-button.active {
             background: #2196F3;
             color: white;
         }
 
-        .loading-indicator {
+        #loading {
             display: none;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .loading-indicator.active {
-            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Quick navigation list -->
-        <div id="slide-list">
-            <h3>Slide Navigation</h3>
-            <button onclick="loadSlide(1)" class="active">2.1 Units</button>
-            <button onclick="loadSlide(2)">2.2 Mains electricity - Safety</button>
-            <button onclick="loadSlide(3)">2.3 Current in Resistors</button>
-            <button onclick="loadSlide(4)">2.4 Power Relationship</button>
-            <button onclick="loadSlide(5)">2.5 Energy Transfer</button>
-            <button onclick="loadSlide(6)">2.6 AC vs DC</button>
-            <button onclick="loadSlide(7)">2.7 Series vs Parallel</button>
-            <button onclick="loadSlide(8)">2.8 Current in Series</button>
-            <button onclick="loadSlide(9)">2.9 Current vs Voltage</button>
-            <button onclick="loadSlide(10)">2.10 Resistance Effects</button>
-            <button onclick="loadSlide(11)">2.11 LDR and Thermistors</button>
-            <button onclick="loadSlide(12)">2.12 Circuit Indicators</button>
-            <button onclick="loadSlide(13)">2.13 Ohm's Law</button>
-            <button onclick="loadSlide(14)">2.14 Current Flow</button>
-            <button onclick="loadSlide(15)">2.15 Charge and Current</button>
-            <button onclick="loadSlide(16)">2.16 Electron Flow</button>
-            <button onclick="loadSlide(17)">2.17 Current at Junction</button>
-            <button onclick="loadSlide(18)">2.18 Parallel Voltage</button>
-            <button onclick="loadSlide(19)">2.19 Series Calculations</button>
-            <button onclick="loadSlide(20)">2.20 Volt Definition</button>
-            <button onclick="loadSlide(21)">2.21 Energy and Charge</button>
-            <button onclick="loadSlide(22)">2.22P Conductors</button>
-            <button onclick="loadSlide(23)">2.23P Friction Charging</button>
-            <button onclick="loadSlide(24)">2.24P Electrostatic Charges</button>
-            <button onclick="loadSlide(25)">2.25P Charge Forces</button>
-            <button onclick="loadSlide(26)">2.26P Electron Movement</button>
-            <button onclick="loadSlide(27)">2.27P Static Dangers</button>
-            <button onclick="loadSlide(28)">2.28P Static Uses</button>
+        <!-- Slide Menu -->
+        <div id="slide-menu">
+            <h3 class="menu-title">Slides</h3>
+            <!-- Slide buttons will be added here by JavaScript -->
         </div>
 
-        <div class="slides">
-            <!-- Slides will be loaded here -->
-            <div class="loading-indicator">
-                Loading slide...
-            </div>
+        <!-- Slide Content -->
+        <div id="slide-content">
+            <div id="loading">Loading...</div>
         </div>
 
-        <div class="navigation-bar">
-            <button class="nav-btn" onclick="prevSlide()" id="prevBtn">Previous</button>
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="prevSlide()">Previous</button>
             <div class="slide-counter" id="slideCounter">Slide 1/28</div>
-            <button class="nav-btn" onclick="nextSlide()" id="nextBtn">Next</button>
+            <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next</button>
         </div>
     </div>
 
     <script>
+        // Slide titles
+        const slideTitles = [
+            "2.1 Units",
+            "2.2 Mains Electricity",
+            "2.3 Current in Resistors",
+            "2.4 Power Relationship",
+            "2.5 Energy Transfer",
+            "2.6 AC vs DC",
+            "2.7 Series vs Parallel",
+            "2.8 Current in Series",
+            "2.9 Current vs Voltage",
+            "2.10 Resistance Effects",
+            "2.11 LDR and Thermistors",
+            "2.12 Circuit Indicators",
+            "2.13 Ohm's Law",
+            "2.14 Current Flow",
+            "2.15 Charge and Current",
+            "2.16 Electron Flow",
+            "2.17 Current at Junction",
+            "2.18 Parallel Voltage",
+            "2.19 Series Calculations",
+            "2.20 Volt Definition",
+            "2.21 Energy and Charge",
+            "2.22P Conductors",
+            "2.23P Friction Charging",
+            "2.24P Electrostatic Charges",
+            "2.25P Charge Forces",
+            "2.26P Electron Movement",
+            "2.27P Static Dangers",
+            "2.28P Static Uses"
+        ];
+
         let currentSlide = 1;
         const totalSlides = 28;
 
-        // Function to load slide content
+        // Create slide menu buttons
+        function createSlideMenu() {
+            const menu = document.getElementById('slide-menu');
+            slideTitles.forEach((title, index) => {
+                const button = document.createElement('button');
+                button.className = 'slide-button';
+                button.textContent = title;
+                button.onclick = () => loadSlide(index + 1);
+                menu.appendChild(button);
+            });
+        }
+
+        // Load slide content
         async function loadSlide(slideNumber) {
-    try {
-        const response = await fetch(`./slides/slide${slideNumber}.html`);
-        if (!response.ok) throw new Error('Slide not found');
-        
-        const slideContent = await response.text();
-        const slidesContainer = document.querySelector('.slides');
-        
-        // Clear existing content except loading indicator
-        const loadingIndicator = document.querySelector('.loading-indicator');
-        slidesContainer.innerHTML = slideContent;
-        
-        // Update navigation state
-        document.getElementById('slideCounter').textContent = `Slide ${slideNumber}/${totalSlides}`;
-        document.getElementById('prevBtn').disabled = slideNumber === 1;
-        document.getElementById('nextBtn').disabled = slideNumber === totalSlides;
-        
-        // Update slide list highlighting
-        document.querySelectorAll('#slide-list button').forEach((btn, index) => {
-            btn.classList.toggle('active', index + 1 === slideNumber);
-        });
-        
-    } catch (error) {
-        console.error('Error loading slide:', error);
-        const slidesContainer = document.querySelector('.slides');
-        slidesContainer.innerHTML = `<div class="active">
-            <h2>Error Loading Slide ${slideNumber}</h2>
-            <p>Please make sure the slide file exists and try again.</p>
-        </div>`;
-    }
-}
+            const loading = document.getElementById('loading');
+            const slideContent = document.getElementById('slide-content');
+            
+            try {
+                loading.style.display = 'block';
+                
+                const response = await fetch(`slides/slide${slideNumber}.html`);
                 if (!response.ok) throw new Error('Slide not found');
                 
-                const slideContent = await response.text();
-                
-                // Update slides container
-                slidesContainer.innerHTML = slideContent;
-                
-                // Update slide list highlighting
-                document.querySelectorAll('#slide-list button').forEach((btn, index) => {
-                    btn.classList.toggle('active', index + 1 === slideNumber);
-                });
+                const content = await response.text();
+                slideContent.innerHTML = content;
+                currentSlide = slideNumber;
+                updateNavigation();
+                updateSlideButtons();
                 
             } catch (error) {
                 console.error('Error loading slide:', error);
-                slidesContainer.innerHTML = `<div class="active">
+                slideContent.innerHTML = `
                     <h2>Error Loading Slide ${slideNumber}</h2>
                     <p>Please make sure the slide file exists and try again.</p>
-                </div>`;
+                `;
             } finally {
-                loadingIndicator.classList.remove('active');
+                loading.style.display = 'none';
             }
         }
 
@@ -235,6 +232,12 @@
             document.getElementById('slideCounter').textContent = `Slide ${currentSlide}/${totalSlides}`;
             document.getElementById('prevBtn').disabled = currentSlide === 1;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function updateSlideButtons() {
+            document.querySelectorAll('.slide-button').forEach((btn, index) => {
+                btn.classList.toggle('active', index + 1 === currentSlide);
+            });
         }
 
         function nextSlide() {
@@ -255,7 +258,8 @@
             if (e.key === 'ArrowLeft') prevSlide();
         });
 
-        // Load first slide on page load
+        // Initialize
+        createSlideMenu();
         loadSlide(1);
     </script>
 </body>
