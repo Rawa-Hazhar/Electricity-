@@ -138,34 +138,6 @@
         color: #c62828;
         display: block;
     }
-
-    .quiz-section {
-        background: white;
-        border-radius: 15px;
-        padding: 2rem;
-        margin: 2rem 0;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .quiz-options {
-        margin: 1.5rem 0;
-    }
-
-    .quiz-option {
-        background: #f8f9fa;
-        padding: 1rem;
-        border-radius: 8px;
-        margin: 0.5rem 0;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .quiz-option:hover {
-        background: #e3f2fd;
-    }
 </style>
 
 <div class="slide-content">
@@ -252,19 +224,6 @@
                 Example: A 60W bulb uses 60 joules of energy every second
             </div>
         </div>
-
-        <div class="unit-card">
-            <div class="unit-header">
-                <div class="unit-symbol">s</div>
-                <div class="unit-title">Second</div>
-            </div>
-            <div class="unit-description">
-                Measures time - duration of electrical processes.
-            </div>
-            <div class="example">
-                Example: Used in calculating energy usage over time (kWh = kilowatt-hours)
-            </div>
-        </div>
     </div>
 
     <div class="interactive-section">
@@ -288,24 +247,6 @@
         <button class="check-btn" onclick="checkMatch()">Check Answer</button>
         <div id="match-feedback" class="feedback"></div>
     </div>
-
-    <div class="quiz-section">
-        <h2>Understanding Check</h2>
-        <p>Select the correct unit for measuring electrical power:</p>
-        <div class="quiz-options">
-            <label class="quiz-option">
-                <input type="radio" name="quiz1" value="volt"> Volt (V)
-            </label>
-            <label class="quiz-option">
-                <input type="radio" name="quiz1" value="watt"> Watt (W)
-            </label>
-            <label class="quiz-option">
-                <input type="radio" name="quiz1" value="amp"> Ampere (A)
-            </label>
-        </div>
-        <button class="check-btn" onclick="checkQuiz()">Submit Answer</button>
-        <div id="quiz-feedback" class="feedback"></div>
-    </div>
 </div>
 
 <script>
@@ -326,25 +267,6 @@
             feedback.className = "feedback success";
         } else {
             feedback.textContent = "Not quite right. Try again!";
-            feedback.className = "feedback error";
-        }
-    }
-
-    function checkQuiz() {
-        const selected = document.querySelector('input[name="quiz1"]:checked');
-        const feedback = document.getElementById('quiz-feedback');
-        
-        if (!selected) {
-            feedback.textContent = "Please select an answer!";
-            feedback.className = "feedback error";
-            return;
-        }
-        
-        if (selected.value === 'watt') {
-            feedback.textContent = "Correct! The watt (W) is the unit of electrical power.";
-            feedback.className = "feedback success";
-        } else {
-            feedback.textContent = "Try again! Remember, we measure electrical power in watts (W).";
             feedback.className = "feedback error";
         }
     }
